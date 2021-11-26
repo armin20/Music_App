@@ -1,0 +1,13 @@
+body {
+  background-color: rgb(240, 232, 232);
+}
+h2 {
+  padding-top: 100px;
+  font-size: 50px;
+  text-align: center;
+  color: darkred;
+}
+h3 {
+  padding-top: 20px;
+  text-align: center;
+}
