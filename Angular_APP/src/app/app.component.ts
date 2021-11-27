@@ -6,7 +6,7 @@
 * 
 *  Name: Armin Sharifiyan Student ID: 130891203 Date: November 26, 2021
 *
-*  Angular App (Deployed) Link: _____________________________________________________
+*  Angular App (Deployed) Link: https://music-app-v1.vercel.app
 *
 *  User API (Heroku) Link: https://calm-anchorage-61423.herokuapp.com/api/user
 *

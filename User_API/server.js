@@ -15,7 +15,7 @@ const HTTP_PORT = process.env.PORT || 8080;
 // JSON Web Token Setup
 var ExtractJwt = passportJWT.ExtractJwt;
 var JwtStrategy = passportJWT.Strategy;
-
+// const option = { expiresIn: process.env.JWT_EXPIRES_IN || "2h" };
 // Configure its options
 var jwtOptions = {};
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
@@ -81,7 +81,9 @@ app.post("/api/user/login", (req, res) => {
         userName: user.userName,
       };
 
-      var token = jwt.sign(payload, jwtOptions.secretOrKey);
+      var token = jwt.sign(payload, jwtOptions.secretOrKey, {
+        expiresIn: 60 * 60,
+      });
       res.json({ message: "login successful", token: token });
     })
     .catch((err) => {
