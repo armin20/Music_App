@@ -30,6 +30,9 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { InterceptTokenService } from './intercept-token.service';
 
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +65,8 @@ import { InterceptTokenService } from './intercept-token.service';
     HttpClientModule,
     FormsModule,
     MatSnackBarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

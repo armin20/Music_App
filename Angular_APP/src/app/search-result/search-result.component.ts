@@ -11,6 +11,7 @@ export class SearchResultComponent implements OnInit {
   results: any;
   searchQuery: String = "";
   sub: any;
+  spinner: boolean = true;
 
   constructor(private route: ActivatedRoute, private musicDataService: MusicDataService) { 
   }
@@ -21,6 +22,7 @@ export class SearchResultComponent implements OnInit {
         this.musicDataService.searchArtists(this.searchQuery).subscribe((data)=>{
           this.results = data.artists.items.filter((artist: any)=>{
             if(artist.images.length > 0){
+              this.spinner = false;
               return artist;
             }
           });

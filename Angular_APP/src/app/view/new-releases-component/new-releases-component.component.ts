@@ -9,13 +9,18 @@ export class NewReleasesComponentComponent implements OnInit {
   
   releases: any;
   subs: any;
+  spinner: boolean = true;
   constructor(private dataMusicService: MusicDataService) {
 
   }
   
   ngOnInit(): void {
   this.subs = this.dataMusicService.getNewReleases().subscribe((data)=>{
-    this.releases = data.albums.items;
+    if(data){
+      this.spinner = false;
+      this.releases = data.albums.items;
+    }
+
   });
   }
 
