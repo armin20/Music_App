@@ -4,7 +4,7 @@
 *  assignment has been copied manually or electronically from any other source (including web sites) or 
 *  distributed to other students.
 * 
-*  Name: Armin Sharifiyan Student ID: 130891203 Date: November 26, 2021
+*  Name: Armin Sharifiyan Student ID: 130891203 Date: December 3, 2021
 *
 *  Angular App (Deployed) Link: https://music-app-v1.vercel.app
 *
@@ -24,7 +24,7 @@ import { AuthService } from './auth.service';
 export class AppComponent implements OnInit{
   searchString: String = "";
 
-  title = 'web-assignment4';
+  title = 'web-assignment6';
   public token: any;
 
   constructor(private router: Router, private AuthService: AuthService){  }

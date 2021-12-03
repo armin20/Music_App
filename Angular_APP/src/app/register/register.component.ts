@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import RegisterUser from '../RegisterUser';
 
@@ -28,16 +27,13 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(formName: NgForm) : void {
+  onSubmit() : void {
     if(this.registerUser.userName !== "" && this.registerUser.password === this.registerUser.password2){
       this.loading = true;
       this.Auth.register(this.registerUser).subscribe(data =>{
-            
-
-              this.success = true;
-              this.warning = "";
-              this.loading = false;
-            
+          this.success = true;
+          this.warning = "";
+          this.loading = false;
           },(err)=> {
           this.success = false;
           this.warning = err.error.message;
@@ -45,7 +41,6 @@ export class RegisterComponent implements OnInit {
       });
     }
     if(this.registerUser.password !== this.registerUser.password2){
-
       this.warning = "Password does not match";
     }
   }

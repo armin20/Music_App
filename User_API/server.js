@@ -15,17 +15,10 @@ const HTTP_PORT = process.env.PORT || 8080;
 // JSON Web Token Setup
 var ExtractJwt = passportJWT.ExtractJwt;
 var JwtStrategy = passportJWT.Strategy;
-// const option = { expiresIn: process.env.JWT_EXPIRES_IN || "2h" };
-// Configure its options
+const option = { expiresIn: process.env.JWT_EXPIRES_IN || "1h" };
+
 var jwtOptions = {};
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
-
-// IMPORTANT - this secret should be a long, unguessable string
-// (ideally stored in a "protected storage" area on the
-// web server, a topic that is beyond the scope of this course)
-// We suggest that you generate a random 64-character string
-// using the following online tool:
-// https://lastpass.com/generatepassword.php
 
 jwtOptions.secretOrKey = process.env.JWT_SECRET;
 
@@ -33,9 +26,6 @@ var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
   console.log("payload received", jwt_payload);
 
   if (jwt_payload) {
-    // The following will ensure that all routes using
-    // passport.authenticate have a req.user._id, req.user.userName, req.user.fullName & req.user.role values
-    // that matches the request payload data
     next(null, { _id: jwt_payload._id, userName: jwt_payload.userName });
   } else {
     next(null, false);
@@ -43,22 +33,7 @@ var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
 });
 passport.use(strategy);
 
-// add passport as application-level middleware
 app.use(passport.initialize());
-
-// app.use(passport.initialize());
-// passport.use(new passportJWT.Strategy(
-//   {
-//     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-//     secretOrKey: process.env.JWT_SECRET
-//   },
-//   function verify(payload, next){
-//     if(!payload){
-//       return next(null, false);
-//     }
-
-//   }
-// ));
 
 app.use(express.json());
 app.use(cors());
@@ -81,7 +56,7 @@ app.post("/api/user/login", (req, res) => {
         userName: user.userName,
       };
 
-      var token = jwt.sign(payload, jwtOptions.secretOrKey);
+      var token = jwt.sign(payload, jwtOptions.secretOrKey, option);
 
       res.json({ message: "login successful", token: token });
     })
@@ -108,9 +83,8 @@ app.put(
     if (!req.body) {
       return res.status(400).send({ message: "error" });
     } else {
-      // console.log(req.body);
       userService
-        .addFavourite(req.user._id, req.params.id) //might have error during adding to favourites
+        .addFavourite(req.user._id, req.params.id)
         .then((result) => res.json(result))
         .catch((err) => res.status(400).json({ message: err }));
     }
@@ -124,7 +98,7 @@ app.delete(
     userService
       .removeFavourite(req.user._id, req.params.id)
       .then((result) => res.json(result))
-      .catch((err) => res.send(err));
+      .catch((err) => res.status(400).json({ message: err }));
   }
 );
 

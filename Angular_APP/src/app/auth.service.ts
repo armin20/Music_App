@@ -34,16 +34,13 @@ export class AuthService {
   isAuthenticated() : boolean{
     const token = this.readToken();    
     if(token){
-      console.log('token exist'); 
+      // console.log('token exist'); 
       return true;
     }
-    else{
-      console.log(token, 'noooo');
-      
+    else{ 
       return false;
     }
   }
-
 
   login(user: User): Observable<any>{
     return this.http.post<any>(`${environment.userAPIBase}/login`, user);

@@ -11,9 +11,6 @@ import { AuthService } from './auth.service';
 })
 export class MusicDataService {
 
-
-  // private favouritesList: Array<any> = [];
-
   constructor(private spotifyToken: SpotifyTokenService, private http: HttpClient, private Auth: AuthService) { }  
 
   getNewReleases(): Observable<any> {
@@ -75,30 +72,18 @@ export class MusicDataService {
 
 
   addToFavourites(id:string): Observable<any> {
-
-    let token = this.Auth.isAuthenticated();
-    let t1 = this.Auth.readToken();
-    let getT = this.Auth.getToken();
-    console.log(token);
-    console.log(getT);
-    
-
-    
-    
-    return this.http.put<any>(`${environment.userAPIBase}/favourites/${id}`, { headers: { "Authorization": `Bearer ${t1}` } 
+    let token = this.Auth.readToken();
+    return this.http.put<any>(`${environment.userAPIBase}/favourites/${id}`, { headers: { "Authorization": `Bearer ${token}` } 
   });
   }
   
   removeFromFavourites(id:string): Observable<any> {
     return this.http.delete<[String]>(`${environment.userAPIBase}/favourites/${id}`).pipe(mergeMap(favouritesArray => {
       let removedFavourites = favouritesArray.indexOf(id);
-      console.log(removedFavourites);
-      
+
       favouritesArray.splice(removedFavourites, 1);
       return this.getFavourites();
-      // TODO: Perform the same tasks as the original getFavourites() method, only using "favouritesArray" from above, instead of this.favouritesList
-      // NOTE: for the empty array, you will need to use o=>o.next({tracks: []}) instead of o=>{o.next([])}
-    }));
+      }));
   }
   
   getFavourites(): Observable<any> {
@@ -115,40 +100,7 @@ export class MusicDataService {
       }
       else{  
       return new Observable(o=>{o.next({tracks: []})});
-      }
-      // TODO: Perform the same tasks as the original getFavourites() method, only using "favouritesArray" from above, instead of this.favouritesList
-      // NOTE: for the empty array, you will need to use o=>o.next({tracks: []}) instead of o=>{o.next([])}
+      }   
     }));
   }
-  // addToFavourites(id: any): boolean{
-
-  //   if((id !== null || id !== undefined) && this.favouritesList.length >= 50){
-  //     return false;
-  //   }
-  //   else{
-  //     this.favouritesList.push(id);
-  //     return true;
-  //   }
-  // }
-
-  // removeFromFavourites(id: any): Observable<any>{
-  //   this.favouritesList.splice(this.favouritesList.indexOf(id), 1);
-  //   return this.getFavourites();
-  // }
-  
-  // getFavourites(): Observable<any> {
-  //   if(this.favouritesList.length > 0){
-  //     const ids = this.favouritesList.join(',');
-  //     return this.spotifyToken.getBearerToken().pipe(mergeMap(token=>{
-  //       return this.http.get<any>(`https://api.spotify.com/v1/tracks?ids=${ids}`,
-  //        { headers: { "Authorization": `Bearer ${token}` } 
-  //        }
-  //       );
-  //     })
-  //    );
-  //   }
-  //   else{  
-  //   return new Observable(o=>{o.next([])});
-  //   }
-  // }
 }

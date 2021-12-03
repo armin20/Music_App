@@ -11,7 +11,6 @@ export class ArtistDiscographyComponentComponent implements OnInit {
   albums: any; 
   artists: any;
   private albumSubscribe: any;
-  private dataRoute: any;
   private sub: any;
 
   constructor(private route: ActivatedRoute,

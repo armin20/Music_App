@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import User from '../User';
@@ -24,15 +23,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(formName: NgForm): void{
+  onSubmit(): void{
     if(this.user.userName !== "" && this.user.password !== ""){
       this.loading = true;
       this.Auth.login(this.user).subscribe(result=>{
         if(result){
           this.loading = false;
-          
           localStorage.setItem('access_token', result.token);
-          console.log(localStorage);
           this.router.navigate(['/newReleases']);
         }
       }, (err)=>{

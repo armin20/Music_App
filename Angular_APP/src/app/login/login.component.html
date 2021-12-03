@@ -1,9 +1,8 @@
 <mat-card>
     <mat-card-content>
       <form
-        #formName="ngForm"
         name="form"
-       (ngSubmit)="onSubmit(formName)">
+       (ngSubmit)="onSubmit()">
         <h2>Log In</h2>
         <mat-error *ngIf="warning">{{this.warning}}</mat-error><br />
         <mat-form-field class="full-width-input">
